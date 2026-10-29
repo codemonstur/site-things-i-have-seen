@@ -10,6 +10,7 @@ build: ## Render the tech posts to wwwroot with pandoc
 	@mkdir -p wwwroot/tech
 	@-cp -r src/static/* wwwroot/ 2> /dev/null || true
 	@for f in src/tech/*.md; do \
-		pandoc "$$f" -o "wwwroot/arguments/$$(basename "$${f%.md}.html")" --template=src/templates/tech.html; \
+		[ -e "$$f" ] || continue; \
+		pandoc "$$f" -o "wwwroot/tech/$$(basename "$${f%.md}.html")" --template=src/templates/tech.html; \
 	done
-	@-cp -r arguments/*.html wwwroot/arguments/ 2> /dev/null || true
+	@-cp -r src/tech/*.html wwwroot/tech/ 2> /dev/null || true
